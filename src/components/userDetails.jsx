@@ -7,7 +7,7 @@ import Footer from './footer1';
 import { getResult } from '../service/data';
 
 
-
+const apiEndPoint = 'https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382'
 class UserDetails extends Component {
     state = { 
         user :{},
@@ -25,7 +25,7 @@ class UserDetails extends Component {
         var indexOfUserArray = '';
         // const response = getResult();
         // const usersArrays = response.results;
-        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        const response = await axios.get(apiEndPoint);
         const usersArrays = response.data.results;
         for (var i=0; i < usersArrays.length; i++ ){
             if(usersArrays[i].login.uuid === usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid ){
@@ -77,7 +77,7 @@ class UserDetails extends Component {
         else if (direction === 'right')++userIndexInDb;
         //const response = getResult();
         //const usersArrays = response.results;
-        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        const response = await axios.get(apiEndPoint);
         const usersArrays = response.data.results;
         console.log(usersArrays);
         const user = usersArrays[userIndexInDb]; //get the next user of the specified index

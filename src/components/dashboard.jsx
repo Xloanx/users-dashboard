@@ -8,7 +8,7 @@ import Footer from './footer';
 import { getResult } from '../service/data';
 
 
-
+const apiEndPoint = 'https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382';
 class Dashboard extends Component {
     state = { 
         users :[],
@@ -21,7 +21,7 @@ class Dashboard extends Component {
 
     
      async componentDidMount() {
-        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        const response = await axios.get(apiEndPoint);
         this.setState({users: response.data.results});
         // const results = getResult();
         // this.setState({ users:results.results })
