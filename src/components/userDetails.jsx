@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-import { paginate } from '../utils/paginate';
 import GenderSelectionDiv from './genderSelectionDiv';
 import UserDetail from './userDetail';
 import FilterDiv from './filterDiv';
@@ -25,10 +23,10 @@ class UserDetails extends Component {
         const uuid = match.params.uuid;
         var userArray = [];
         var indexOfUserArray = '';
-        const response = getResult();
-        //const response = await axios.get('https://randomuser.me/api/?results=20&&seed=bf1d471fe1a63382');
-        //const userArray = response.data.results.filter(m => m.email === userEmail);
-        const usersArrays = response.results;
+        // const response = getResult();
+        // const usersArrays = response.results;
+        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        const usersArrays = response.data.results;
         for (var i=0; i < usersArrays.length; i++ ){
             if(usersArrays[i].login.uuid === usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid ){
                 userArray = usersArrays.filter(m => m.login.uuid === uuid);
@@ -73,45 +71,20 @@ class UserDetails extends Component {
         this.setState({searchQuery:query, selectedGender: null, currentPage:1});
     }
 
-    handlePageChange= (direction) =>{
+    handlePageChange= async (direction) =>{
         let {userIndexInDb} = this.state;
         if(direction === 'left')--userIndexInDb;
         else if (direction === 'right')++userIndexInDb;
-        const response = getResult();
-        // //const response = await axios.get('https://randomuser.me/api/?results=20&&seed=bf1d471fe1a63382');
-        // //const userArray = response.data.results.filter(m => m.email === userEmail);
-        const usersArrays = response.results;
+        //const response = getResult();
+        //const usersArrays = response.results;
+        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        const usersArrays = response.data.results;
         console.log(usersArrays);
         const user = usersArrays[userIndexInDb]; //get the next user of the specified index
         console.log(user);
         this.setState({user : this.mapToViewModel(user), userIndexInDb });
     }
-//     handlePageDecrement= () =>{
-//         let {userIndexInDb} = this.state;
-//         --userIndexInDb;
-//         const response = getResult();
-//         // //const response = await axios.get('https://randomuser.me/api/?results=20&&seed=bf1d471fe1a63382');
-//         // //const userArray = response.data.results.filter(m => m.email === userEmail);
-//         const usersArrays = response.results;
-//         console.log(usersArrays);
-//         const user = usersArrays[userIndexInDb]; //get the next user of the specified index
-//         console.log(user);
-//         this.setState({user : this.mapToViewModel(user), userIndexInDb });
-// }
 
-//     handlePageIncrement= () =>{
-//             let {userIndexInDb} = this.state;
-//             ++userIndexInDb;
-//             const response = getResult();
-//             // //const response = await axios.get('https://randomuser.me/api/?results=20&&seed=bf1d471fe1a63382');
-//             // //const userArray = response.data.results.filter(m => m.email === userEmail);
-//             const usersArrays = response.results;
-//             console.log(usersArrays);
-//             const user = usersArrays[userIndexInDb]; //get the next user of the specified index
-//             console.log(user);
-//             this.setState({user : this.mapToViewModel(user), userIndexInDb });
-//          }
-  
 
      getData = () =>{
 
@@ -147,7 +120,9 @@ class UserDetails extends Component {
                     onChange={this.handleSearch}/>
 
                     <div className="bg-light text-dark p-2 flex-fill bd-highlight rounded border border-2">
-                        <FilterDiv header = {header}/>
+                        <FilterDiv header = {header}
+                                   value={searchQuery}
+                                    onChange={this.handleSearch}/>
 
                         <UserDetail  
                             user = {user}/> 
@@ -156,8 +131,6 @@ class UserDetails extends Component {
                             dataIndex = {userIndexInDb}
                             dataCount= {totalUsersCount}
                             onPageChange = {this.handlePageChange}
-                            // onPageDecrement = {this.handlePageDecrement}
-                            // onPageIncrement={this.handlePageIncrement}
                             />
                     </div>
                 </div>

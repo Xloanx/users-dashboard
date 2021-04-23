@@ -7,7 +7,7 @@ const Pagination = (props) => {
     const activeState = 'btn btn-light btn-sm m-1';
     return ( 
             <React.Fragment>
-                
+                <span>Page {dataIndex+1} of {dataCount}</span>
                 <a className={dataIndex === 0 ? inActiveState : activeState}
                             onClick={()=>onPageChange('left')}>
                             <i className="fa fa-chevron-left"></i> </a>

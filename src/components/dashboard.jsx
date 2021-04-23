@@ -19,13 +19,12 @@ class Dashboard extends Component {
         pageArrayState:[]
      }
 
-    //  searchKeys = ['all', 'male', 'female'];
-
+    
      async componentDidMount() {
-        // const response = await axios.get('https://randomuser.me/api/?results=20&&seed=bf1d471fe1a63382');
-        // this.setState({users: response.data.results});
-        const results = getResult();
-        this.setState({ users:results.results })
+        const response = await axios.get('https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382');
+        this.setState({users: response.data.results});
+        // const results = getResult();
+        // this.setState({ users:results.results })
      }
 
     handleGenderSelect = gender =>{

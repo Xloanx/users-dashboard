@@ -4,7 +4,6 @@ import _ from 'lodash';
 
 const Pagination = (props) => {
     const {dataCount, pageSize, currentPage, pageArrayState, onPageChange} = props;
-    //console.log("currentPage:", currentPage);
 
     const pagesCount = Math.ceil(dataCount / pageSize);
     const pageArray = _.range(1, pagesCount+1);
@@ -13,7 +12,7 @@ const Pagination = (props) => {
     const activeState = 'btn btn-light btn-sm m-1';
     return ( 
             <React.Fragment>
-                
+                <span>Page {currentPage} of {pageArray[pageArray.length-1]}</span>
                 <a className={currentPage === 1 ? inActiveState : activeState}
                             onClick={()=>onPageChange( currentPage, 'left' )}>
                             <i className="fa fa-chevron-left"></i> </a>
