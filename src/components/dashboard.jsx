@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import httpClient from '../service/httpService';
 import config from '../config.json';
+import { toast } from 'react-toastify';
 import { paginate } from '../utils/paginate';
 import GenderSelectionDiv from './genderSelectionDiv';
 import UserCard from './userCard';

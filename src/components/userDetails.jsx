@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import httpClient from '../service/httpService';
+import { toast } from 'react-toastify';
 import config from '../config.json';
 import GenderSelectionDiv from './genderSelectionDiv';
 import UserDetail from './userDetail';
@@ -30,16 +31,17 @@ class UserDetails extends Component {
         // const usersArrays = response.results;
         const response = await httpClient.get(config.apiEndPoint);
         const usersArrays = response.data.results;
+        if(usersArrays.filter(m => m.login.uuid === uuid)[0] === undefined){
+            toast.error("Invalid ID! Record Not Found");
+            return history.replace('/notFound');
+        }
         for (var i=0; i < usersArrays.length; i++ ){
-            if(usersArrays.filter(m => m.login.uuid === uuid)[0] !== undefined){
                 if(usersArrays[i].login.uuid === 
                     usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid ){
                         status = 'found';
                         trueIndex = i;
                 }
             }
-            else status = 'notFound';
-        }
         if (status === 'found'){
             userArray = usersArrays.filter(m => m.login.uuid === uuid);
             indexOfUserArray = trueIndex;
