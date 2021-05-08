@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import httpClient from '../service/httpService';
 import config from '../config.json';
 import GenderSelectionDiv from './genderSelectionDiv';
 import UserDetail from './userDetail';
@@ -26,7 +26,7 @@ class UserDetails extends Component {
         var indexOfUserArray = '';
         // const response = getResult();
         // const usersArrays = response.results;
-        const response = await axios.get(config.apiEndPoint);
+        const response = await httpClient.get(config.apiEndPoint);
         const usersArrays = response.data.results;
         for (var i=0; i < usersArrays.length; i++ ){
             if(usersArrays[i].login.uuid === usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid ){
@@ -78,7 +78,7 @@ class UserDetails extends Component {
         else if (direction === 'right')++userIndexInDb;
         //const response = getResult();
         //const usersArrays = response.results;
-        const response = await axios.get(config.apiEndPoint);
+        const response = await httpClient.get(config.apiEndPoint);
         const usersArrays = response.data.results;
         console.log(usersArrays);
         const user = usersArrays[userIndexInDb]; //get the next user of the specified index

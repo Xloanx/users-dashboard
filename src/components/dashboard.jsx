@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import httpClient from '../service/httpService';
 import config from '../config.json';
 import { paginate } from '../utils/paginate';
 import GenderSelectionDiv from './genderSelectionDiv';
@@ -21,7 +21,7 @@ class Dashboard extends Component {
 
     
      async componentDidMount() {
-        const response = await axios.get(config.apiEndPoint);
+        const response = await httpClient.get(config.apiEndPoint);
         this.setState({users: response.data.results});
         // const results = getResult();
         // this.setState({ users:results.results })
