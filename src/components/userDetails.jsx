@@ -24,18 +24,28 @@ class UserDetails extends Component {
         const uuid = match.params.uuid;
         var userArray = [];
         var indexOfUserArray = '';
+        var trueIndex = '';
+        var status="";
         // const response = getResult();
         // const usersArrays = response.results;
         const response = await httpClient.get(config.apiEndPoint);
         const usersArrays = response.data.results;
         for (var i=0; i < usersArrays.length; i++ ){
-            if(usersArrays[i].login.uuid !== undefined && 
-                usersArrays[i].login.uuid === usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid )
-                {
-                userArray = usersArrays.filter(m => m.login.uuid === uuid);
-                indexOfUserArray = i;
+            if(usersArrays.filter(m => m.login.uuid === uuid)[0] !== undefined){
+                if(usersArrays[i].login.uuid === 
+                    usersArrays.filter(m => m.login.uuid === uuid)[0].login.uuid ){
+                        status = 'found';
+                        trueIndex = i;
+                }
             }
+            else status = 'notFound';
         }
+        if (status === 'found'){
+            userArray = usersArrays.filter(m => m.login.uuid === uuid);
+            indexOfUserArray = trueIndex;
+        }
+        else return history.replace('/notFound');
+        
 
         if(userArray.length > 1 || userArray.length < 1) return;    //return nothing if multiple users share same uuid
         const [user] = userArray;            //get the user object from the array 
