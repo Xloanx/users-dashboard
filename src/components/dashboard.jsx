@@ -75,6 +75,7 @@ class Dashboard extends Component {
                     value={searchQuery}
                     selectedGender = {selectedGender}
                     onChange={this.handleSearch}/>
+                    
 
                     <div className="bg-light text-dark p-2 flex-fill bd-highlight rounded border border-2">
                         <FilterDiv header = {header}                     
