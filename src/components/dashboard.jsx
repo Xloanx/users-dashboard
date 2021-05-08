@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import config from '../config.json';
 import { paginate } from '../utils/paginate';
 import GenderSelectionDiv from './genderSelectionDiv';
 import UserCard from './userCard';
@@ -8,7 +9,6 @@ import Footer from './footer';
 import { getResult } from '../service/data';
 
 
-const apiEndPoint = 'https://randomuser.me/api/?results=50&&seed=bf1d471fe1a63382';
 class Dashboard extends Component {
     state = { 
         users :[],
@@ -21,7 +21,7 @@ class Dashboard extends Component {
 
     
      async componentDidMount() {
-        const response = await axios.get(apiEndPoint);
+        const response = await axios.get(config.apiEndPoint);
         this.setState({users: response.data.results});
         // const results = getResult();
         // this.setState({ users:results.results })
